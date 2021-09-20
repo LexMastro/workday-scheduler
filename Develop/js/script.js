@@ -1,8 +1,7 @@
 const storeData = window.localStorage;
 const now = moment();
 const saveButton = document.getElementsByClassName(".savebtn");
-
-
+const container = $(".container");
 
 let currentTime = moment().format('MMMM Do YYYY, h:mm:ss a');
 $("#currentDay").text(currentTime);
@@ -12,8 +11,6 @@ function update() {
 
 setInterval(update, 1000);
 
-const container = $(".container");
-
 // // Make time blocks of a work day (9-5pm)
 const hours = [
     '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM',
@@ -21,15 +18,15 @@ const hours = [
 
 // // Make time blocks clickable & able to write data inside
 for (let i = 0; i < hours.length; i++) {
-    //Assign current hour in 24-hr notation to a variable
+    //Assign current hour in 24-hr form
     let dataHour = [i + 9];
     // Create a row
     let tRow = $('<tr class="time-block">');
-    // Populate first column with hours array along with dataHour
+    // Populate first column with work hours
     let hourRow = $(
         `<td class="align-middle"><h3 class="time" id="${hours[i]}" data-hour="${dataHour}">${hours[i]}</h3></td>`
     );
-    // Create a column with a textbox along with dataHour
+    // Create a column with a textbox to input tasks
     // grab exisiting value from local storage
     let existingNote = localStorage.getItem('taskText' + dataHour) || "";
 
@@ -41,11 +38,11 @@ for (let i = 0; i < hours.length; i++) {
         `<td class="align-middle"></td>`
     );
     task.append(textArea);
-    // Create a column with a save button along with dataHour
+    // Create 3rd column with save button 
     let save = $(
         `<td class="align-middle"><i class="far fa-save fa-3x saveBtn" data-hour="${dataHour}"></i></td>`
     );
-    // Append the newly created table data to the table row
+    // Append table data to a row
     tRow.append(hourRow, task, save);
     // Append the table row to the table body
     $('.container').append(tRow);
